@@ -1,0 +1,31 @@
+#!/usr/bin/python
+
+
+import sys, random, os
+import subprocess
+if len(sys.argv)==1:
+    prompt = 'Usage: gcc_evil file...\n'
+    print(prompt)
+    exit(0)
+
+f2 = open(sys.argv[1],'r').read()
+
+ret_place = f2.find('return 0;')
+main_place = f2.find('int main')
+evil_code=''
+
+types = 1
+if random.randint(0,types)==0:
+    evil_code = f2[:ret_place]
+    evil_code += 'printf("hacked\\n");\n'
+    evil_code += f2[ret_place:]
+
+#print(evil_code)
+
+tmp_name = "tmp_c_for_evil_compiler.c"
+
+with open(tmp_name,'w') as f:
+    f.write(evil_code)
+
+os.system('gcc '+tmp_name) 
+os.system('rm '+tmp_name)
