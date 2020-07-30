@@ -25,7 +25,7 @@ Time-Related""".split("\n")
 type_dict = {}
 
 for i in range(len(types)):
-    type_dict[types[i]] = i
+    type_dict[types[i]] = i + 1
 
 print(type_dict)
 pickle.dump(type_dict, open("types.pickle", "wb"))
