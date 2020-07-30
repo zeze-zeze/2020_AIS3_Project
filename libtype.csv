@@ -1,0 +1,280 @@
+abort,Process Control
+atexit,Process Control
+exit,Process Control
+system,Process Control
+getenv,Process Control
+fprintf,File and I/O
+fscanf,File and I/O
+printf,File and I/O
+scanf,File and I/O
+sprintf,File and I/O
+sscanf,File and I/O
+vfprintf,File and I/O
+vprintf,File and I/O
+vsprintf,File and I/O
+fclose,File and I/O
+fflush,File and I/O
+fopen,File and I/O
+freopen,File and I/O
+remove,File and I/O
+rename,File and I/O
+setbuf,File and I/O
+setvbuf,File and I/O
+fgetc,File and I/O
+fgets,File and I/O
+fputc,File and I/O
+fputs,File and I/O
+getc,File and I/O
+getchar,File and I/O
+gets,File and I/O
+putc,File and I/O
+putchar,File and I/O
+puts,File and I/O
+ungetc,File and I/O
+fread,File and I/O
+fwrite,File and I/O
+fgetpos,File and I/O
+fseek,File and I/O
+fsetpos,File and I/O
+ftell,File and I/O
+rewind,File and I/O
+feof,File and I/O
+ferror,File and I/O
+tmpfile,File and I/O
+tmpnam,File and I/O
+clearerr,File and I/O
+perror,File and I/O
+abs,Calculation
+div,Calculation
+labs,Calculation
+ldiv,Calculation
+rand,Calculation
+srand,Calculation
+atof,Calculation
+atoi,Calculation
+atol,Calculation
+bsearch,Calculation
+qsort,Calculation
+calloc,Memory
+malloc,Memory
+realloc,Memory
+free,Memory
+mblen,string
+mbtowc,string
+wctomb,string
+mbstowcs,string
+wcstombs,string
+strtod,string
+strtol,string
+strtoll,string
+strtoul,string
+ftruncate,File Access
+creat,File Access
+open,File Access
+open,File Access
+truncate,File Access
+ftruncate,File Access
+pipe,File Access
+fstat,File Access
+fstat,File Access
+fstat,File Access
+fchmod,File Access
+fchown,File Access
+access,File Access
+stat,File Access
+fstat,File Access
+lstat,File Access
+umask,File Access
+utime,File Access
+utimes,File Access
+chmod,File Access
+fchmod,File Access
+chown,File Access
+fchown,File Access
+link,File Access
+symlink,File Access
+rename,File Access
+unlink,File Access
+lseek,File Access
+readlink,File Access
+mkdir,File Access
+mknod,File Access
+rmdir,File Access
+getdents,File Access
+readdir,File Access
+fdatasync,File Access
+fsync,File Access
+msync,File Access
+chroot,File Access
+chdir,File Access
+fchdir,File Access
+fchdir,File Access
+socket,Network Access
+socketpair,Network Access
+getsockopt,Network Access
+setsockopt,Network Access
+bind,Network Access
+getsockname,Network Access
+listen,Network Access
+accept,Network Access
+connect,Network Access
+shutdown,Network Access
+recv,Network Access
+recvmsg,Network Access
+recvmsg,Network Access
+send,Network Access
+sendmsg,Network Access
+sendmsg,Network Access
+getdomainname,Network Access
+setdomainname,Network Access
+gethostid,Network Access
+gethostname,Network Access
+gethostname,Network Access
+sethostid,Network Access
+sethostname,Network Access
+sethostname,Network Access
+getpeername,Network Access
+msgctl,Message Queues
+msgget,Message Queues
+msgsnd,Message Queues
+msgrcv,Message Queues
+shmctl,Shared Memory
+shmdt,Shared Memory
+shmget,Shared Memory
+shmat,Shared Memory
+close,File Descriptor Operations
+mmap,File Descriptor Operations
+munmap,File Descriptor Operations
+getdtablesize,File Descriptor Operations
+dup,File Descriptor Operations
+dup2,File Descriptor Operations
+read,File Descriptor Operations
+readv,File Descriptor Operations
+readv,File Descriptor Operations
+write,File Descriptor Operations
+writev,File Descriptor Operations
+writev,File Descriptor Operations
+flock,File Descriptor Operations
+fcntl,File Descriptor Operations
+fcntl,File Descriptor Operations
+ioctl,File Descriptor Operations
+nanosleep,Time-Related
+alarm,Time-Related
+getitimer,Time-Related
+setitimer,Time-Related
+gettimeofday,Time-Related
+settimeofday,Time-Related
+time,Time-Related
+times,Time-Related
+_exit,Process Control
+clone,Process Control
+execve,Process Control
+fork,Process Control
+vfork,Process Control
+wait,Process Control
+waitpid,Process Control
+wait3,Process Control
+getpid,Process Control
+getppid,Process Control
+kill,Process Control
+killpg,Process Control
+sigblock,Process Control
+sigmask,Process Control
+siggetmask,Process Control
+sigsetmask,Process Control
+signal,Process Control
+sigvec,Process Control
+sigaction,Process Control
+sigprocmask,Process Control
+sigpending,Process Control
+sigsuspend,Process Control
+sigpause,Process Control
+pause,Process Control
+sigreturn,Process Control
+poll,Process Control
+semctl,Process Control
+semget,Process Control
+semop,Process Control
+getuid,Process Control
+getgid,Process Control
+getegid,Process Control
+geteuid,Process Control
+getresuid,Process Control
+getresgid,Process Control
+getsid,Process Control
+getpgid,Process Control
+getpgrp,Process Control
+getgroups,Process Control
+setegid,Process Control
+seteuid,Process Control
+setfsgid,Process Control
+setfsuid,Process Control
+setgid,Process Control
+setregid,Process Control
+setreuid,Process Control
+setresgid,Process Control
+setresuid,Process Control
+setgroups,Process Control
+setsid,Process Control
+setuid,Process Control
+getrlimit,Process Control
+setrlimit,Process Control
+getrusage,Process Control
+getpriority,Process Control
+nice,Process Control
+getpriority,Process Control
+brk,Process Control
+mlock,Process Control
+mlockall,Process Control
+munlock,Process Control
+munlockall,Process Control
+mprotect,Process Control
+modify_ldt,Process Control
+uselib,Process Control
+profil,Process Control
+ptrace,Process Control
+sync,System-Wide
+ustat,System-Wide
+statfs,System-Wide
+fstatfs,System-Wide
+sysfs,System-Wide
+sysfs,System-Wide
+sysfs,System-Wide
+getpagesize,System-Wide
+sysinfo,System-Wide
+uname,System-Wide
+setup,System-Wide
+swapoff,System-Wide
+swapon,System-Wide
+umount,System-Wide
+umount,System-Wide
+sched_get_priority_max,System-Wide
+sched_get_priority_min,System-Wide
+sched_getparam,System-Wide
+sched_setparam,System-Wide
+sched_getscheduler,System-Wide
+sched_setscheduler,System-Wide
+sched_rr_get_interval,System-Wide
+sched_yield,System-Wide
+stime,System-Wide
+adjtimex,System-Wide
+create_module,System-Wide
+delete_module,System-Wide
+init_module,System-Wide
+query_module,System-Wide
+get_kernel_syms,System-Wide
+acct,System-Wide
+quotactl,System-Wide
+_sysctl,System-Wide
+syslog,System-Wide
+idle,System-Wide
+reboot,System-Wide
+iopl,System-Wide
+bdflush,System-Wide
+bdflush,System-Wide
+cacheflush,System-Wide
+socketcall,System-Wide
+personality,System-Wide
+vhangup,System-Wide
+vm86old,System-Wide
+vm86,System-Wide
