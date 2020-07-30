@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import os, sys
 
 os.system('/home/ais3/AIS3-2020/final_project/objconv/objconv '
