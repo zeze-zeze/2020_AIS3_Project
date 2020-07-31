@@ -219,7 +219,7 @@ def header():
 func_name_count = 0
 def random_gen_func():
     global func_name_count
-    gen_func('evil{}'.format(func_name_count), 'int')
+    gen_func('func{}'.format(func_name_count), 'int')
     func_name_count += 1
 
 
@@ -280,7 +280,7 @@ for i in range(100):
 # gen_func_from_seq('main', 'int', exp_seq, True)
 
 for i in range(100):
-    gen_func_from_seq('func{}'.format(i), 'int', exp_seq)
+    gen_func_from_seq('evil{}'.format(i), 'int', exp_seq)
 
 #for i in range(20):
 #    gen_func_from_seq('open_tcp{}'.format(i), 'int', tcp_seq)
