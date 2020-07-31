@@ -10,8 +10,10 @@ f = '\n'.join([i for i in f.split('\n') if 'ALIGN' not in i])
 f = '\n'.join([i for i in f.split('\n') if 'extern' not in i])
 f = '\n'.join([i for i in f.split('\n') if 'default' not in i])
 f = '\n'.join([i for i in f.split('\n') if 'global' not in i])
-f = ['\n'.join(i.split('\n')[1:]) for i in f.split('SECTION') if 'noexecute' not in i]
-output = '\n'.join(f).replace(': ',':\n       ').replace('\n\n','\n')
+f = f.replace('?_0','.L')
+f = ['\n'.join(i.split('\n')[1:]) for i in f.split('SECTION') if 'noexecute' not in i and 'plt' not in i]
+f = '\n'.join(f).replace(': ',':\n       ').replace('\n\n','\n')
+output = '\n'.join([i for i in f.split('\n') if i.strip()!=''])
 print(output)
 with open(sys.argv[1].replace('./','').replace('.out','')+'.s','w') as f:
     f.write(output)
