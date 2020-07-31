@@ -77,11 +77,12 @@ def gen_access_file(max_deep, cur_deep):
 def density_decreased(codeblock):
     codeblock = codeblock.split('\n')
     ret = ""
-    max_deep = random.randint(2, 4)
+    max_deep = random.randint(1, 2)
     for line in codeblock:
+        if line.strip() == '':
+            continue
         ret += code_block(max_deep, 0)
         ret += line + '\n'
-        ret += code_block(max_deep, 0)
     return ret
 
 def seq_to_code(exp_seq):
@@ -162,7 +163,7 @@ def code_block(max_deep, cur_deep, buk=False):
         scope_push()
         ret = '  ' * cur_deep + '{\n'
 
-    for count in range(random.randint(2, 3)):
+    for count in range(random.randint(1, 3)):
         root_code = get_random_func()
         ret += root_code(max_deep, cur_deep + 1)
 
@@ -262,13 +263,24 @@ def gen_func_from_seq(func_name, ret_type, seq, main_func=False):
     scope_pop()
     print('}')
 
-def gen_func(func_name, ret_type, main_func=False):
+def gen_func_from_seq_nopadding(func_name, ret_type, seq, main_func=False):
     def_func_discription(func_name, main_func)
     print('{} {}() {{'.format(ret_type, func_name))
     scope_push()
     root_code = get_random_func()
     max_deep = random.randint(1, 5)
-    print(code_block(max_deep, 0))
+    print(seq_to_code(seq))
+    scope_pop()
+    print('}')
+
+def gen_func(func_name, ret_type, main_func=False):
+    def_func_discription(func_name, main_func)
+    print('{} {}() {{'.format(ret_type, func_name))
+    scope_push()
+    root_code = get_random_func()
+    max_deep = random.randint(1, 2)
+    for i in range(11):
+        print(code_block(max_deep, 0))
     #print(seq_to_code(exp_seq))
     scope_pop()
     print('}\n')
