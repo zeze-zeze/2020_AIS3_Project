@@ -46,7 +46,7 @@
 * sklearn.linear_model.LogisticRegression
 * sklearn.linear_model.PassiveAggressiveRegressor # Classifier Available
 * sklearn.linear_model.PoissonRegressor
-* sklearn.linear_model.RANSACRegressor
+* sklearn.linear_model.RANSACRegressor # Complicated, Skipped
 * sklearn.linear_model.Ridge # Classifier Available
 * sklearn.linear_model.SGDRegressor # Classifier Available
 * sklearn.linear_model.TheilSenRegressor

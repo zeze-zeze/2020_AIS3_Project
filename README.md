@@ -21,13 +21,13 @@ vector params: d=200...
 ## Compile
 
 ```bash
-gcc /tmp/tmp.c
+gcc /tmp/tmp.c -o /tmp/tmp.out
 ```
 
 ## Convert binary to vector with `asm2vec`
 
 ```bash
-
+./execute2vec.sh /tmp/tmp.out ./train_data/vec.csv
 ```
 
 ## Run Classification
