@@ -59,7 +59,7 @@ def vectorizer(fname,oname):
 #    for (ef, efv) in zip(estimating_funcs, estimating_funcs_vec):
 #        print(ef.name()+','+str(list(efv)))            
     with open(oname,'w') as f:
-        f.write('function_name,vector\n')
+        #f.write('function_name,vector\n')
         for (ef, efv) in zip(estimating_funcs, estimating_funcs_vec):
             f.write(ef.name()+', '+str(list(efv))[1:-1]+'\n')          
 
