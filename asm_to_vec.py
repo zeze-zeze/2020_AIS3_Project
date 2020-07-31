@@ -30,11 +30,9 @@ def model_deserialization(s):
 
 def training():
     training_funcs = asm2vec.parse.parse('out_onlockdown_5.s',func_names=['main'])
-    estimating_funcs = asm2vec.parse.parse('a.s',func_names=['main'])
 
     
     print('# of training functions:', len(training_funcs))
-    print('# of estimating functions:', len(estimating_funcs))
 
     model = asm2vec.model.Asm2Vec(d=200)
     training_repo = model.make_function_repo(training_funcs)
@@ -54,7 +52,11 @@ def vectorizer(fname,oname):
     model = model_deserialization(open('asm2vec.model','r').read()) 
 
     #print(list(model.to_vec(estimating_funcs[0])))
-    estimating_funcs_vec = list(map(lambda f: model.to_vec(f), estimating_funcs))
+    estimating_funcs_vec = []
+    for func in estimating_funcs:
+        print (func.name())
+        estimating_funcs_vec.append(model.to_vec(func))
+
 
 #    for (ef, efv) in zip(estimating_funcs, estimating_funcs_vec):
 #        print(ef.name()+','+str(list(efv)))            
