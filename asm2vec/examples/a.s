@@ -1,92 +1,13 @@
-
-
-
-
-
 _init:
-        
         sub     rsp, 8                                  
-        mov     rax, qword [rel ?_036]                  
+        mov     rax, qword [rel .L36]                  
         test    rax, rax                                
-        jz      ?_001                                   
+        jz      .L01                                   
         call    rax                                     
-?_001:
+.L01:
         add     rsp, 8                                  
         ret                                             
-
-
-
-?_002:
-        push    qword [rel ?_024]                       
-        jmp     near [rel ?_025]                        
-
-
-?_003:
-        jmp     near [rel ?_026]                        
-
-        push    0                                       
-        jmp     ?_002                                   
-
-?_004:
-        
-        jmp     near [rel ?_027]                        
-
-        push    1                                       
-        jmp     ?_002                                   
-
-?_005:
-        
-        jmp     near [rel ?_028]                        
-
-        push    2                                       
-        jmp     ?_002                                   
-
-?_006:
-        
-        jmp     near [rel ?_029]                        
-
-        push    3                                       
-        jmp     ?_002                                   
-
-?_007:
-        
-        jmp     near [rel ?_030]                        
-
-        push    4                                       
-        jmp     ?_002                                   
-
-?_008:
-        
-        jmp     near [rel ?_031]                        
-
-        push    5                                       
-        jmp     ?_002                                   
-
-?_009:
-        
-        jmp     near [rel ?_032]                        
-
-        push    6                                       
-        jmp     ?_002                                   
-
-?_010:
-        
-        jmp     near [rel ?_033]                        
-
-        push    7                                       
-        jmp     ?_002                                   
-
-
-
-?_011:
-        jmp     near [rel ?_038]                        
-
-
-
-
-
 _start:
-       
         xor     ebp, ebp                                
         mov     r9, rdx                                 
         pop     rsi                                     
@@ -97,29 +18,23 @@ _start:
         lea     r8, [rel __libc_csu_fini]               
         lea     rcx, [rel __libc_csu_init]              
         lea     rdi, [rel main]                         
-        call    near [rel ?_035]                        
+        call    near [rel .L35]                        
         hlt                                             
-
 deregister_tm_clones:
         lea     rdi, [rel _edata]                       
         push    rbp                                     
         lea     rax, [rel _edata]                       
         cmp     rax, rdi                                
         mov     rbp, rsp                                
-        jz      ?_012                                   
-        mov     rax, qword [rel ?_034]                  
+        jz      .L12                                   
+        mov     rax, qword [rel .L34]                  
         test    rax, rax                                
-        jz      ?_012                                   
+        jz      .L12                                   
         pop     rbp                                     
         jmp     rax                                     
-
-
-?_012:
+.L12:
         pop     rbp                                     
         ret                                             
-
-
-
 register_tm_clones:
         lea     rdi, [rel _edata]                       
         lea     rsi, [rel _edata]                       
@@ -131,49 +46,37 @@ register_tm_clones:
         shr     rax, 63                                 
         add     rsi, rax                                
         sar     rsi, 1                                  
-        jz      ?_013                                   
-        mov     rax, qword [rel ?_037]                  
+        jz      .L13                                   
+        mov     rax, qword [rel .L37]                  
         test    rax, rax                                
-        jz      ?_013                                   
+        jz      .L13                                   
         pop     rbp                                     
         jmp     rax                                     
-
-
-?_013:
+.L13:
         pop     rbp                                     
         ret                                             
-
-
-
         cmp     byte [rel _edata], 0                    
-        jnz     ?_015                                   
-        cmp     qword [rel ?_038], 0                    
+        jnz     .L15                                   
+        cmp     qword [rel .L38], 0                    
         push    rbp                                     
         mov     rbp, rsp                                
-        jz      ?_014                                   
+        jz      .L14                                   
         mov     rdi, qword [rel __dso_handle]           
-        call    ?_011                                   
-?_014:
+        call    .L11                                   
+.L14:
         call    deregister_tm_clones                    
         mov     byte [rel _edata], 1                    
         pop     rbp                                     
         ret                                             
-
-
-?_015:
+.L15:
         DB      0F3H                                    
         ret                                             
-
-
-
 frame_dummy:
         push    rbp                                     
         mov     rbp, rsp                                
         pop     rbp                                     
         jmp     register_tm_clones                      
-
 evil:
-         
         push    rbp                                     
         mov     rbp, rsp                                
         sub     rsp, 48                                 
@@ -181,63 +84,60 @@ evil:
         mov     qword [rbp-8H], rax                     
         xor     eax, eax                                
         mov     word [rbp-20H], 2                       
-        lea     rdi, [rel ?_019]                        
-        call    ?_007                                   
+        lea     rdi, [rel .L19]                        
+        call    .L07                                   
         mov     dword [rbp-1CH], eax                    
         mov     edi, 8080                               
-        call    ?_005                                   
+        call    .L05                                   
         mov     word [rbp-1EH], ax                      
         mov     edx, 0                                  
         mov     esi, 1                                  
         mov     edi, 2                                  
-        call    ?_010                                   
+        call    .L10                                   
         mov     dword [rbp-24H], eax                    
         lea     rcx, [rbp-20H]                          
         mov     eax, dword [rbp-24H]                    
         mov     edx, 16                                 
         mov     rsi, rcx                                
         mov     edi, eax                                
-        call    ?_008                                   
+        call    .L08                                   
         mov     eax, dword [rbp-24H]                    
         mov     esi, 0                                  
         mov     edi, eax                                
-        call    ?_006                                   
+        call    .L06                                   
         mov     eax, dword [rbp-24H]                    
         mov     esi, 1                                  
         mov     edi, eax                                
-        call    ?_006                                   
+        call    .L06                                   
         mov     eax, dword [rbp-24H]                    
         mov     esi, 2                                  
         mov     edi, eax                                
-        call    ?_006                                   
+        call    .L06                                   
         mov     r8d, 0                                  
         mov     ecx, 0                                  
-        lea     rdx, [rel ?_020]                        
-        lea     rsi, [rel ?_021]                        
-        lea     rdi, [rel ?_022]                        
+        lea     rdx, [rel .L20]                        
+        lea     rsi, [rel .L21]                        
+        lea     rdi, [rel .L22]                        
         mov     eax, 0                                  
-        call    ?_009                                   
+        call    .L09                                   
         nop                                             
         mov     rax, qword [rbp-8H]                     
         xor     rax, qword [fs:abs 28H]                 
-        jz      ?_016                                   
-        call    ?_004                                   
-?_016:
+        jz      .L16                                   
+        call    .L04                                   
+.L16:
         leave                                           
         ret                                             
-
 main:
-         
         push    rbp                                     
         mov     rbp, rsp                                
-        lea     rdi, [rel ?_023]                        
-        call    ?_003                                   
+        lea     rdi, [rel .L23]                        
+        call    .L03                                   
         mov     eax, 0                                  
         call    evil                                    
         mov     eax, 0                                  
         pop     rbp                                     
         ret                                             
-
 __libc_csu_init:
         push    r15                                     
         push    r14                                     
@@ -254,18 +154,17 @@ __libc_csu_init:
         sar     rbp, 3                                  
         call    _init                                   
         test    rbp, rbp                                
-        jz      ?_018                                   
+        jz      .L18                                   
         xor     ebx, ebx                                
-
-?_017:
+.L17:
         mov     rdx, r15                                
         mov     rsi, r14                                
         mov     edi, r13d                               
         call    near [r12+rbx*8]                        
         add     rbx, 1                                  
         cmp     rbp, rbx                                
-        jnz     ?_017                                   
-?_018:
+        jnz     .L17                                   
+.L18:
         add     rsp, 8                                  
         pop     rbx                                     
         pop     rbp                                     
@@ -274,20 +173,11 @@ __libc_csu_init:
         pop     r14                                     
         pop     r15                                     
         ret                                             
-
         nop                                             
-
-
 __libc_csu_fini:
         DB      0F3H                                    
         ret                                             
-
-
-
 _fini:
-        
         sub     rsp, 8                                  
         add     rsp, 8                                  
         ret                                             
-
-
