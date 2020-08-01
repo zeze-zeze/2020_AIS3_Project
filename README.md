@@ -17,18 +17,26 @@ vector params: d=200...
 ```bash
 ./random-c.py > /tmp/tmp.c
 ```
-
+## asm2vec environment
+run in git main directory
+```
+git clone https://github.com/lancern/asm2vec.git
+export PYTHONPATH="`pwd`/asm2vec:$PYTHONPATH"
+source ~/.bashrc
+```
 ## Compile
 
 ```bash
-gcc /tmp/tmp.c
+gcc /tmp/tmp.c -o /tmp/tmp.out
 ```
 
 ## Convert binary to vector with `asm2vec`
 
 ```bash
-
+./execute2vec.sh /tmp/tmp.out ./train_data/vec.csv
 ```
+
+
 
 ## Run Classification
 
