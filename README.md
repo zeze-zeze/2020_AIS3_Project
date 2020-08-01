@@ -12,10 +12,20 @@ vector params: d=200...
 
 
 
+## Generate Vectors
+
+```bash
+python main.py
+```
+
+
+
+
+
 ## Generate random C source code
 
 ```bash
-./random-c.py > /tmp/tmp.c
+./random-c.py > ./tmp/tmp.c
 ```
 ## asm2vec environment
 run in git main directory
@@ -27,13 +37,13 @@ source ~/.bashrc
 ## Compile
 
 ```bash
-gcc /tmp/tmp.c -o /tmp/tmp.out
+gcc ./tmp/tmp.c -o ./tmp/tmp.out
 ```
 
 ## Convert binary to vector with `asm2vec`
 
 ```bash
-./execute2vec.sh /tmp/tmp.out ./train_data/vec.csv
+./execute2vec.sh ./tmp/tmp.out ./train_data/vec.csv
 ```
 
 
