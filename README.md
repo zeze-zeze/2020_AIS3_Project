@@ -3,6 +3,7 @@
 * 組別: 軟體安全開發 6th
 * 組員: 林詠翔 stdlib.h, 林哲宇 zeze, 顏伯勳 Bronson, 謝繼緯 Tomy
 * [簡報](https://docs.google.com/presentation/d/1yUHZjCuffwgdU5RMp0XDFAVgkfmwzkDo5ElGYpZmI04/edit#slide=id.g8edbfa2c57_2_1)
+* [hackmd](https://hackmd.io/tbtjo3e2ScWkXX9sWECrNQ?both)
 
 ## 專案說明
 ### 主題
