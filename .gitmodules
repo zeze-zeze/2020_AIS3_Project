@@ -1,0 +1,3 @@
+[submodule "src/asm2vec"]
+	path = src/asm2vec
+	url = https://github.com/Lancern/asm2vec.git
