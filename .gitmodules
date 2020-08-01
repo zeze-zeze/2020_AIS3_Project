@@ -1,3 +1,6 @@
 [submodule "src/asm2vec"]
 	path = src/asm2vec
 	url = https://github.com/Lancern/asm2vec.git
+[submodule "src/objconv"]
+	path = src/objconv
+	url = https://github.com/gitGNU/objconv

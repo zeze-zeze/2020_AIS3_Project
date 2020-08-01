@@ -7,9 +7,7 @@ import os
 import sys
 
 TMP_FILE = "tmp123123.s"
-OBJCONV_PATH = os.path.join(
-    os.path.abspath(os.path.dirname(__file__)), "objconv/objconv"
-)
+OBJCONV_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), "objconv_bin")
 
 
 def execute(input_file):

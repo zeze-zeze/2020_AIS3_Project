@@ -13,7 +13,7 @@ def list_models() -> list:
     for file in os.listdir(MODEL_DIR):
         full_path = os.path.join(FILE_DIR, "models", file)
         if os.path.isfile(full_path) and file.endswith(".pkl"):
-            models.append(file.rstrip(".pkl"))
+            models.append(file.replace(".pkl", ""))
     return models
 
 

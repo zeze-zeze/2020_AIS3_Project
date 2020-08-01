@@ -14,29 +14,61 @@ TMP_CSV = os.path.join(WORKDIR, "tmp.csv")
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Check if binary include any evil function"
+        description="Check if executable binary include any evil function"
     )
     parser.add_argument(
-        "-b", "--binary", type=str, required=True, help="dataset statistic report"
+        "-l",
+        "--list",
+        default=False,
+        action="store_false",
+        help="list all available model",
     )
     parser.add_argument(
-        "-m", "--model", default="Gaussian Process", type=str, choices=list_models()
+        "-b",
+        "--binary",
+        type=str,
+        nargs=1,
+        required=True,
+        help="the path to executable binary",
+        metavar="executable_path",
+    )
+    parser.add_argument(
+        "-m",
+        "--model",
+        default="Gaussian Process",
+        type=str,
+        nargs=1,
+        choices=list_models(),
+        help="the model used to classify function (default: Gaussian Process)",
+        metavar="model_name",
     )
     arg = parser.parse_args()
 
+    if arg.list:
+        print(list_models())
+        return 0
+
+    full_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), arg.binary[0])
+    if not os.path.isfile(full_path):
+        raise FileNotFoundError(arg.binary[0])
+
     # Convert to ASM
-    asm = obj_to_asm(arg.binary)
+    asm = obj_to_asm(full_path)
     with open(TMP_ASM, "w") as file:
         file.write(asm)
 
     # Convert to Vectors
-    asm_to_vec(TMP_ASM, TMP_CSV)
+    functions = asm_to_vec(TMP_ASM, TMP_CSV)
+    print("Complete Function List: ")
+    print(functions)
 
     # Predict
     results = predict(TMP_CSV, arg.model)
     for func in results:
         print(f"Target Function Found: {func}")
 
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
