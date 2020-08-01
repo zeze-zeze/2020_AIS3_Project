@@ -21,7 +21,7 @@ with open(TMP_SOURCE, "w") as file:
     file.write(c_source)
 
 # tmp.c -> tmp.out
-os.system(f"gcc-9 {TMP_SOURCE} -o {TMP_BIN}")
+os.system(f"gcc {TMP_SOURCE} -o {TMP_BIN}")
 
 # tmp.out -> tmp.s -> tmp.asm
 asm = obj_to_asm(TMP_BIN)

@@ -13,7 +13,7 @@ OBJCONV_PATH = os.path.join(
 
 
 def execute(input_file):
-    os.system(f"{OBJCONV_PATH} -fnasm {input_file} {TMP_FILE}")
+    os.system(f"{OBJCONV_PATH} -fnasm {input_file} {TMP_FILE} 1> /dev/null")
     f = "\n".join([i.split(";")[0] for i in open(TMP_FILE, "r").read().split("\n")])
     os.system(f"rm {TMP_FILE}")
     f = "\n".join([i for i in f.split("\n") if i != ""])
