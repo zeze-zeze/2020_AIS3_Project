@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# github README 2020 AIS3 Project
+# 2020 AIS3 Project
 ## Team Info
 * 組別: 軟體安全開發 6th
 * 組員: 林詠翔 stdlib.h, 林哲宇 zeze, 顏伯勳 Bronson, 謝繼緯 Tomy
