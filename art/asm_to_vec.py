@@ -9,7 +9,6 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "asm2vec")))
-print(sys.path)
 
 import asm2vec.asm
 import asm2vec.model
@@ -78,7 +77,7 @@ def vectorizer(fname, oname):
     # print(list(model.to_vec(estimating_funcs[0])))
     estimating_funcs_vec = []
     for func in estimating_funcs:
-        print(func.name())
+        # print(func.name())
         estimating_funcs_vec.append(model.to_vec(func))
 
     #    for (ef, efv) in zip(estimating_funcs, estimating_funcs_vec):
@@ -87,6 +86,8 @@ def vectorizer(fname, oname):
         # f.write('function_name,vector\n')
         for (ef, efv) in zip(estimating_funcs, estimating_funcs_vec):
             f.write(ef.name() + ", " + str(list(efv))[1:-1] + "\n")
+
+    return sorted([x.name() for x in estimating_funcs])
 
 
 if __name__ == "__main__":
