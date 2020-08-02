@@ -5,32 +5,27 @@ __license__ = "MIT"
 
 import os
 
-# from src.asm_to_vec import vectorizer as asm_to_vec
-# from src.obj_to_asm import execute as obj_to_asm
-from src.random_c import main as random_c
+from art.random_c import main as random_c
 
-WORKDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp"))
-TMP_SOURCE = os.path.join(WORKDIR, "tmp.c")
-TMP_BIN = os.path.join(WORKDIR, "tmp.bin")
-# TMP_ASM = os.path.join(WORKDIR, "tmp.asm")
-# EXPORT_CSV = os.path.join(WORKDIR, "vec.csv")
 
-# Generate Working Directory
-if not os.path.exists(WORKDIR):
-    os.mkdir(WORKDIR)
+def main():
 
-# Generating Source Code
-c_source = random_c()
-with open(TMP_SOURCE, "w") as file:
-    file.write(c_source)
+    WORKDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "tmp"))
+    TMP_SOURCE = os.path.join(WORKDIR, "tmp.c")
+    TMP_BIN = os.path.join(WORKDIR, "tmp.bin")
 
-# Compiling
-os.system(f"gcc {TMP_SOURCE} -o {TMP_BIN}")
+    # Generate Working Directory
+    if not os.path.exists(WORKDIR):
+        os.mkdir(WORKDIR)
 
-# # tmp.out -> tmp.s -> tmp.asm
-# asm = obj_to_asm(TMP_BIN)
-# with open(TMP_ASM, "w") as file:
-#     file.write(asm)
+    # Generating Source Code
+    c_source = random_c()
+    with open(TMP_SOURCE, "w") as file:
+        file.write(c_source)
 
-# # tmp.asm -> vec.csv
-# asm_to_vec(TMP_ASM, EXPORT_CSV)
+    # Compiling
+    os.system(f"gcc {TMP_SOURCE} -o {TMP_BIN}")
+
+
+if __name__ == "__main__":
+    main()

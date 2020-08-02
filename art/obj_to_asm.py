@@ -6,7 +6,7 @@ __license__ = "MIT"
 import os
 import sys
 
-TMP_FILE = "tmp123123.s"
+TMP_FILE = "tmp.s"
 OBJCONV_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), "objconv_bin")
 
 

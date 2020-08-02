@@ -1,18 +1,23 @@
+#!/usr/bin/env python
+__author__ = "Tomy Hsieh (@tomy0000000)"
+__credits__ = ["Tomy Hsieh"]
+__license__ = "MIT"
+
 import argparse
 import os
 import sys
 
-from src.asm_to_vec import vectorizer as asm_to_vec
-from src.obj_to_asm import execute as obj_to_asm
-from src.classifying.model import list_models
-from src.classifying.util import predict_chain as predict
+from art.asm_to_vec import vectorizer as asm_to_vec
+from art.obj_to_asm import execute as obj_to_asm
+from art.classifying.model import list_models
+from art.classifying.util import predict_chain as predict
 
 WORKDIR = "tmp"
 TMP_ASM = os.path.join(WORKDIR, "tmp.asm")
 TMP_CSV = os.path.join(WORKDIR, "tmp.csv")
 
 
-def main():
+def main(args=sys.argv[1:]):
     parser = argparse.ArgumentParser(
         description="Check if executable binary include any evil function"
     )
@@ -42,7 +47,7 @@ def main():
         help="the model used to classify function (default: Gaussian Process)",
         metavar="model_name",
     )
-    arg = parser.parse_args()
+    arg = parser.parse_args(args=args)
 
     if arg.list:
         print(list_models())
